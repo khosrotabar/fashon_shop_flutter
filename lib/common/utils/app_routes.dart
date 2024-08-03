@@ -1,10 +1,16 @@
 // ignore_for_file: unused_element
 
 import 'package:fashon_shop/src/auth/views/login_screen.dart';
+import 'package:fashon_shop/src/auth/views/registration_screen.dart';
 import 'package:fashon_shop/src/categories/views/categories_screen.dart';
+import 'package:fashon_shop/src/categories/views/category_page.dart';
 import 'package:fashon_shop/src/entrypoint/views/entrypoint.dart';
 import 'package:fashon_shop/src/notifications/views/notification_screen.dart';
 import 'package:fashon_shop/src/onboarding/views/onboarding_screen.dart';
+import 'package:fashon_shop/src/products/views/product_screen.dart';
+import 'package:fashon_shop/src/profile/views/orders_screen.dart';
+import 'package:fashon_shop/src/profile/views/profile_policy_screen.dart';
+import 'package:fashon_shop/src/profile/views/shipping_address_screen.dart';
 import 'package:fashon_shop/src/search/views/search_screen.dart';
 import 'package:fashon_shop/src/splashscreen/views/splashscreen_page.dart';
 import 'package:flutter/material.dart';
@@ -32,10 +38,10 @@ final GoRouter _router = GoRouter(
     //   path: '/review',
     //   builder: (context, state) => const ReviewsPage(),
     // ),
-    // GoRoute(
-    //   path: '/policy',
-    //   builder: (context, state) => const PolicyPage(),
-    // ),
+    GoRoute(
+      path: '/policy',
+      builder: (context, state) => const ProfilePolicyScreen(),
+    ),
     // GoRoute(
     //   path: '/verification',
     //   builder: (context, state) => const VerificationPage(),
@@ -48,25 +54,25 @@ final GoRouter _router = GoRouter(
     //   path: '/help',
     //   builder: (context, state) => const HelpCenterPage(),
     // ),
-    // GoRoute(
-    //   path: '/orders',
-    //   builder: (context, state) => const OrdersPage(),
-    // ),
+    GoRoute(
+      path: '/orders',
+      builder: (context, state) => const OrdersScreen(),
+    ),
     GoRoute(
       path: '/login',
       builder: (context, state) => const LoginScreen(),
     ),
-    // GoRoute(
-    //   path: '/register',
-    //   builder: (context, state) => const RegistrationPage(),
-    // ),
-    // GoRoute(
-    //   path: '/categories',
-    //   builder: (context, state) => const CategoriesPage(),
-    // ),
+    GoRoute(
+      path: '/register',
+      builder: (context, state) => const RegistrationScreen(),
+    ),
+    GoRoute(
+      path: '/categories',
+      builder: (context, state) => const CategoriesScreen(),
+    ),
     GoRoute(
       path: '/category',
-      builder: (context, state) => const CategoriesScreen(),
+      builder: (context, state) => const CategoryPage(),
     ),
 
     // GoRoute(
@@ -74,10 +80,10 @@ final GoRouter _router = GoRouter(
     //   builder: (context, state) => const AddAddress(),
     // ),
 
-    // GoRoute(
-    //   path: '/addresses',
-    //   builder: (context, state) => const AddressesListPage(),
-    // ),
+    GoRoute(
+      path: '/addresses',
+      builder: (context, state) => const ShippingAddressScreen(),
+    ),
 
     GoRoute(
       path: '/notifications',
@@ -104,13 +110,13 @@ final GoRouter _router = GoRouter(
     //   builder: (context, state) => const FailedPayment(),
     // ),
 
-    // GoRoute(
-    //   path: '/product/:id',
-    //   builder: (BuildContext context, GoRouterState state) {
-    //     final productId = state.pathParameters['id'];
-    //     return ProductPage(productId: productId.toString());
-    //   },
-    // ),
+    GoRoute(
+      path: '/product/:id',
+      builder: (BuildContext context, GoRouterState state) {
+        final productId = state.pathParameters['id'];
+        return ProductScreen(productId: productId.toString());
+      },
+    ),
   ],
 );
 

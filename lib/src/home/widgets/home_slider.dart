@@ -44,7 +44,7 @@ class HomeSlider extends StatelessWidget {
               height: ScreenUtil().screenHeight * 0.16,
               width: ScreenUtil().screenWidth,
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,

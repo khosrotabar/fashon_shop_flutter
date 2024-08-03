@@ -5,22 +5,21 @@ import 'package:fashon_shop/common/widgets/custom_button.dart';
 import 'package:fashon_shop/common/widgets/email_textfield.dart';
 import 'package:fashon_shop/common/widgets/password_field.dart';
 import 'package:fashon_shop/src/auth/controllers/auth_notifier.dart';
-import 'package:fashon_shop/src/auth/models/login_model.dart';
-import 'package:fashon_shop/src/entrypoint/controllers/bottom_tab_notifier.dart';
+import 'package:fashon_shop/src/auth/models/registration_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class RegistrationScreen extends StatefulWidget {
+  const RegistrationScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegistrationScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends State<RegistrationScreen> {
+  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final FocusNode _passwordNode = FocusNode();
@@ -36,17 +35,11 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final controller = Provider.of<AuthNotifier>(context);
-    final controller2 = Provider.of<TabIndexNotifier>(context, listen: false);
 
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        leading: AppBackButton(
-          onTap: () {
-            controller2.setIndex = 0;
-            context.go('/home');
-          },
-        ),
+        leading: const AppBackButton(),
       ),
       body: ListView(
         children: [
@@ -87,6 +80,18 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                 ),
                 SizedBox(height: 25.h),
+                EmailTextField(
+                  radius: 25,
+                  focusNode: _passwordNode,
+                  hintText: 'Email',
+                  controller: _emailController,
+                  prefixIcon: const Icon(CupertinoIcons.mail, size: 20, color: Kolors.kGray),
+                  keyboardType: TextInputType.emailAddress,
+                  onEditingComplete: () {
+                    FocusScope.of(context).requestFocus(_passwordNode);
+                  },
+                ),
+                SizedBox(height: 25.h),
                 PasswordField(
                   controller: _passwordController,
                   focusNode: _passwordNode,
@@ -102,16 +107,19 @@ class _LoginScreenState extends State<LoginScreen> {
                       )
                     : GradientBtn(
                         onTap: () {
-                          LoginModel model = LoginModel(
-                            password: _passwordController.text,
+                          RegistrationModel model = RegistrationModel(
+                            email: _emailController.text,
                             username: _usernameController.text,
+                            password: _passwordController.text,
                           );
 
-                          String data = loginModelToJson(model);
+                          String data = registrationModelToJson(model);
 
-                          controller.loginFunction(data, context);
+                          print(data);
+
+                          // controller.registrationFunction(data, context);
                         },
-                        text: 'L O G I N',
+                        text: 'S I G N U P',
                         btnWidth: ScreenUtil().screenWidth,
                         btnHieght: 40,
                         radius: 20,
@@ -120,27 +128,6 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
         ],
-      ),
-      bottomNavigationBar: SizedBox(
-        height: 130.h,
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.only(bottom: 110),
-            child: GestureDetector(
-              onTap: () {
-                context.push('/register');
-              },
-              child: Text(
-                'Do not have account? Register a new one',
-                style: appStyle(
-                  12,
-                  Colors.blue,
-                  FontWeight.normal,
-                ),
-              ),
-            ),
-          ),
-        ),
       ),
     );
   }

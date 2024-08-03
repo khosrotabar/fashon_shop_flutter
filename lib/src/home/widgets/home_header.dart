@@ -23,7 +23,7 @@ class HomeHeader extends StatelessWidget {
         ),
         GestureDetector(
           onTap: () {
-            context.push('/category');
+            context.push('/categories');
           },
           child: ReusableText(
             text: AppText.kViewAll,

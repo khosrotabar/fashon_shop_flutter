@@ -11,7 +11,7 @@ void showErrorPopup(BuildContext context, String errorMessage, String? title, bo
           title ?? 'Error',
           style: appStyle(
             18.0,
-            Kolors.kGrayLight,
+            Kolors.kRed,
             FontWeight.bold,
           ),
         ),

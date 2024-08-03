@@ -1,8 +1,14 @@
 import 'package:fashon_shop/common/utils/app_routes.dart';
 import 'package:fashon_shop/common/utils/environment.dart';
 import 'package:fashon_shop/common/utils/kstrings.dart';
+import 'package:fashon_shop/src/auth/controllers/auth_notifier.dart';
+import 'package:fashon_shop/src/auth/controllers/password_notifier.dart';
+import 'package:fashon_shop/src/categories/controllers/category_notifier.dart';
 import 'package:fashon_shop/src/entrypoint/controllers/bottom_tab_notifier.dart';
+import 'package:fashon_shop/src/home/controllers/home_tab_notifier.dart';
 import 'package:fashon_shop/src/onboarding/controllers/onboarding_notifier.dart';
+import 'package:fashon_shop/src/products/controllers/color_size_notifier.dart';
+import 'package:fashon_shop/src/products/controllers/product_notifier.dart';
 import 'package:fashon_shop/src/splashscreen/views/splashscreen_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -19,6 +25,13 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (_) => OnboardingNotifier()),
         ChangeNotifierProvider(create: (_) => TabIndexNotifier()),
+        ChangeNotifierProvider(create: (_) => CategoryNotifier()),
+        ChangeNotifierProvider(create: (_) => ChangeNotifier()),
+        ChangeNotifierProvider(create: (_) => HomeTabNotifier()),
+        ChangeNotifierProvider(create: (_) => ProductNotifier()),
+        ChangeNotifierProvider(create: (_) => ColorSizesNotifier()),
+        ChangeNotifierProvider(create: (_) => PasswordNotifier()),
+        ChangeNotifierProvider(create: (_) => AuthNotifier()),
       ],
       child: const MyApp(),
     ),
