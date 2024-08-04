@@ -1,3 +1,5 @@
+// ignore_for_file: body_might_complete_normally_nullable
+
 import 'dart:convert';
 
 import 'package:fashon_shop/common/services/storage.dart';
@@ -5,6 +7,7 @@ import 'package:fashon_shop/common/utils/environment.dart';
 import 'package:fashon_shop/common/utils/kstrings.dart';
 import 'package:fashon_shop/common/widgets/error_modal.dart';
 import 'package:fashon_shop/src/auth/models/auth_token_model.dart';
+import 'package:fashon_shop/src/auth/models/profile_model.dart';
 import 'package:fashon_shop/src/entrypoint/controllers/bottom_tab_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -56,7 +59,7 @@ class AuthNotifier with ChangeNotifier {
     setLoading();
 
     try {
-      var url = Uri.parse('${Environment.appBaseUrl}/auth/token/users/');
+      var url = Uri.parse('${Environment.appBaseUrl}/auth/users/');
       var response = await http.post(
         url,
         headers: {
@@ -67,6 +70,7 @@ class AuthNotifier with ChangeNotifier {
 
       if (response.statusCode == 201) {
         setLoading();
+        context.pop();
       } else if (response.statusCode == 400) {
         setLoading();
         var data = jsonDecode(response.body);
@@ -100,6 +104,17 @@ class AuthNotifier with ChangeNotifier {
     } catch (e) {
       setLoading();
       showErrorPopup(context, AppText.kErrorLogin, null, null);
+    }
+  }
+
+  ProfileModel? getUserData() {
+    String? accessToken = Storage().getString('accessToken');
+
+    if (accessToken != null) {
+      var data = Storage().getString(accessToken);
+      if (data != null) {
+        return profileModelFromJson(data);
+      }
     }
   }
 }

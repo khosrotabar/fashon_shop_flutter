@@ -5,6 +5,8 @@ import 'package:fashon_shop/common/widgets/app_style.dart';
 import 'package:fashon_shop/common/widgets/custom_button.dart';
 import 'package:fashon_shop/common/widgets/help_bottom_sheet.dart';
 import 'package:fashon_shop/common/widgets/reusable_text.dart';
+import 'package:fashon_shop/src/auth/controllers/auth_notifier.dart';
+import 'package:fashon_shop/src/auth/models/profile_model.dart';
 import 'package:fashon_shop/src/auth/views/login_screen.dart';
 import 'package:fashon_shop/src/entrypoint/controllers/bottom_tab_notifier.dart';
 import 'package:fashon_shop/src/profile/widgets/tile_widget.dart';
@@ -20,11 +22,14 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Provider.of<TabIndexNotifier>(context);
+    final authNotifier = Provider.of<AuthNotifier>(context);
     String? accessToken = Storage().getString('accessToken');
 
     if (accessToken == null) {
       return const LoginScreen();
     }
+
+    ProfileModel? user = authNotifier.getUserData();
 
     return Scaffold(
       body: ListView(
@@ -39,7 +44,7 @@ class ProfileScreen extends StatelessWidget {
               ),
               SizedBox(height: 15.h),
               ReusableText(
-                text: 'kings@gmail.com',
+                text: user?.email ?? 'user email',
                 style: appStyle(11, Kolors.kDark, FontWeight.w600),
               ),
               SizedBox(height: 7.h),
@@ -47,7 +52,7 @@ class ProfileScreen extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 15.w),
                 decoration: BoxDecoration(color: Kolors.kOffWhite, borderRadius: BorderRadius.circular(10)),
                 child: ReusableText(
-                  text: 'Andre Dbest',
+                  text: user?.username ?? 'user name',
                   style: appStyle(14, Kolors.kDark, FontWeight.w600),
                 ),
               ),

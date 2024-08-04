@@ -115,9 +115,7 @@ class _LoginScreenState extends State<RegistrationScreen> {
 
                           String data = registrationModelToJson(model);
 
-                          print(data);
-
-                          // controller.registrationFunction(data, context);
+                          controller.registrationFunction(data, context);
                         },
                         text: 'S I G N U P',
                         btnWidth: ScreenUtil().screenWidth,
