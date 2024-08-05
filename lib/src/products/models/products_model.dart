@@ -2,7 +2,7 @@ import 'dart:convert';
 
 List<Products> productsFromJson(String str) => List<Products>.from(json.decode(str).map((x) => Products.fromJson(x)));
 
-String productsToJson(List<Products> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String productsToJson(List<Products> data) => json.encode(data.map((x) => x.toJson()).toList());
 
 class Products {
   final int id;
@@ -38,14 +38,14 @@ class Products {
   factory Products.fromJson(Map<String, dynamic> json) => Products(
         id: json["id"],
         title: json["title"],
-        price: json["price"]?.toDouble(),
+        price: (json["price"] as num).toDouble(),
         description: json["description"],
         isFeatured: json["is_featured"],
         clothesType: json["clothesType"],
-        ratings: json["ratings"]?.toDouble(),
-        colors: List<String>.from(json["colors"].map((x) => x)),
-        imageUrls: List<String>.from(json["imageUrls"].map((x) => x)),
-        sizes: List<String>.from(json["sizes"].map((x) => x)),
+        ratings: (json["ratings"] as num).toDouble(),
+        colors: List<String>.from(json["colors"]),
+        imageUrls: List<String>.from(json["imageUrls"]),
+        sizes: List<String>.from(json["sizes"]),
         createdAt: DateTime.parse(json["created_at"]),
         category: json["category"],
         brand: json["brand"],
@@ -59,9 +59,9 @@ class Products {
         "is_featured": isFeatured,
         "clothesType": clothesType,
         "ratings": ratings,
-        "colors": List<dynamic>.from(colors.map((x) => x)),
-        "imageUrls": List<dynamic>.from(imageUrls.map((x) => x)),
-        "sizes": List<dynamic>.from(sizes.map((x) => x)),
+        "colors": colors,
+        "imageUrls": imageUrls,
+        "sizes": sizes,
         "created_at": createdAt.toIso8601String(),
         "category": category,
         "brand": brand,
