@@ -11,6 +11,8 @@ class AppText {
   static const String kVerifyText = 'Please enter the code we just sent to email';
   static const String kCartErrorText = 'Please select size and color to proceed';
   static const String kSearch = 'Search';
+  static const String kSearchHint = 'Search For Latest Fashon';
+  static const String kSearchResults = 'Search Results';
 
   static const String kProfilePic = 'https://avatar.iran.liara.run/public/boy?username=Ash';
 

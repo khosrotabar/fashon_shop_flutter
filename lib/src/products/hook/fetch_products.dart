@@ -1,4 +1,5 @@
 import 'package:fashon_shop/common/utils/enums.dart';
+import 'package:fashon_shop/common/utils/environment.dart';
 import 'package:fashon_shop/src/categories/hook/results/products_results.dart';
 import 'package:fashon_shop/src/products/models/products_model.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -14,8 +15,27 @@ FetchProducts fetchProducts(QueryType queryType) {
     Uri url;
 
     try {
-      switch
-      
+      switch (queryType) {
+        case QueryType.all:
+          url = Uri.parse('${Environment.appBaseUrl}/api/products/');
+          break;
+        case QueryType.popular:
+          url = Uri.parse('${Environment.appBaseUrl}/api/products/popular/');
+          break;
+        case QueryType.unisex:
+          url = Uri.parse('${Environment.appBaseUrl}/api/products/byType/?clothesType=${queryType.name}');
+          break;
+        case QueryType.men:
+          url = Uri.parse('${Environment.appBaseUrl}/api/products/byType/?clothesType=${queryType.name}');
+          break;
+        case QueryType.women:
+          url = Uri.parse('${Environment.appBaseUrl}/api/products/byType/?clothesType=${queryType.name}');
+          break;
+        case QueryType.kids:
+          url = Uri.parse('${Environment.appBaseUrl}/api/products/byType/?clothesType=${queryType.name}');
+          break;
+      }
+
       final response = await http.get(url);
 
       if (response.statusCode == 200) {
@@ -31,11 +51,10 @@ FetchProducts fetchProducts(QueryType queryType) {
   useEffect(() {
     fetchData();
     return;
-  }, const []);
+  }, [queryType.index]);
 
   void refetch() {
     isLoading.value = true;
-
     fetchData();
   }
 
