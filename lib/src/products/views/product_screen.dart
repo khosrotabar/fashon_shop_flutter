@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:fashon_shop/common/services/storage.dart';
 import 'package:fashon_shop/common/utils/kcolors.dart';
 import 'package:fashon_shop/common/widgets/app_style.dart';
 import 'package:fashon_shop/common/widgets/back_button.dart';
+import 'package:fashon_shop/common/widgets/login_bottom_sheet.dart';
 import 'package:fashon_shop/common/widgets/reusable_text.dart';
 import 'package:fashon_shop/const/constants.dart';
 import 'package:fashon_shop/src/products/controllers/product_notifier.dart';
@@ -10,6 +12,7 @@ import 'package:fashon_shop/src/products/widgets/expandable_text.dart';
 import 'package:fashon_shop/src/products/widgets/product_bottom_bar.dart';
 import 'package:fashon_shop/src/products/widgets/product_sizes_widget.dart';
 import 'package:fashon_shop/src/products/widgets/similar_products.dart';
+import 'package:fashon_shop/src/whishlist/controllers/whishlist_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -26,6 +29,7 @@ class ProductScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String? accessToken = Storage().getString('accessToken');
     final controller = Provider.of<ProductNotifier>(context);
 
     return Scaffold(
@@ -41,16 +45,26 @@ class ProductScreen extends StatelessWidget {
             actions: [
               Padding(
                 padding: const EdgeInsets.only(right: 16.0),
-                child: GestureDetector(
-                  onTap: () {},
-                  child: const CircleAvatar(
-                    backgroundColor: Kolors.kSecondaryLight,
-                    child: Icon(
-                      AntDesign.heart,
-                      color: Kolors.kRed,
-                      size: 18,
-                    ),
-                  ),
+                child: Consumer<WhishlistNotifier>(
+                  builder: (context, whishListNotifier, child) {
+                    return GestureDetector(
+                      onTap: () {
+                        if (accessToken == null) {
+                          loginBottomSheet(context);
+                        } else {
+                          context.read<WhishlistNotifier>().addRemoveWhishlist(controller.product!.id, () {});
+                        }
+                      },
+                      child: CircleAvatar(
+                        backgroundColor: Kolors.kSecondaryLight,
+                        child: Icon(
+                          AntDesign.heart,
+                          color: whishListNotifier.whishlist.contains(controller.product!.id) ? Kolors.kRed : Kolors.kGray,
+                          size: 18,
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ),
             ],

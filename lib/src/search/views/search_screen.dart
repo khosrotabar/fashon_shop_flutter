@@ -10,6 +10,7 @@ import 'package:fashon_shop/common/widgets/login_bottom_sheet.dart';
 import 'package:fashon_shop/common/widgets/reusable_text.dart';
 import 'package:fashon_shop/src/products/widgets/staggered_tile_widget.dart';
 import 'package:fashon_shop/src/search/controllers/search_notifier.dart';
+import 'package:fashon_shop/src/whishlist/controllers/whishlist_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -114,7 +115,9 @@ class _SearchScreenState extends State<SearchScreen> {
                               onTap: () {
                                 if (accessToken == null) {
                                   loginBottomSheet(context);
-                                } else {}
+                                } else {
+                                  context.read<WhishlistNotifier>().addRemoveWhishlist(product.id, () {});
+                                }
                               },
                             ),
                           );

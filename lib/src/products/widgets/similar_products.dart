@@ -4,6 +4,7 @@ import 'package:fashon_shop/common/widgets/login_bottom_sheet.dart';
 import 'package:fashon_shop/src/products/controllers/product_notifier.dart';
 import 'package:fashon_shop/src/products/hook/fetch_similar.dart';
 import 'package:fashon_shop/src/products/widgets/staggered_tile_widget.dart';
+import 'package:fashon_shop/src/whishlist/controllers/whishlist_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -48,7 +49,7 @@ class SimilarProducts extends HookWidget {
                       if (accessToken == null) {
                         loginBottomSheet(context);
                       } else {
-                        // handle whishlist functionality
+                        context.read<WhishlistNotifier>().addRemoveWhishlist(product.id, () {});
                       }
                     },
                   ),

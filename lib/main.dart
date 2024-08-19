@@ -11,6 +11,7 @@ import 'package:fashon_shop/src/products/controllers/color_size_notifier.dart';
 import 'package:fashon_shop/src/products/controllers/product_notifier.dart';
 import 'package:fashon_shop/src/search/controllers/search_notifier.dart';
 import 'package:fashon_shop/src/splashscreen/views/splashscreen_page.dart';
+import 'package:fashon_shop/src/whishlist/controllers/whishlist_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -34,6 +35,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => PasswordNotifier()),
         ChangeNotifierProvider(create: (_) => AuthNotifier()),
         ChangeNotifierProvider(create: (_) => SearchNotifier()),
+        ChangeNotifierProvider(create: (_) => WhishlistNotifier()),
       ],
       child: const MyApp(),
     ),

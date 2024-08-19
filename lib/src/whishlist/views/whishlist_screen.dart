@@ -4,7 +4,7 @@ import 'package:fashon_shop/common/utils/kstrings.dart';
 import 'package:fashon_shop/common/widgets/app_style.dart';
 import 'package:fashon_shop/common/widgets/reusable_text.dart';
 import 'package:fashon_shop/src/auth/views/login_screen.dart';
-import 'package:fashon_shop/src/products/widgets/explore_products.dart';
+import 'package:fashon_shop/src/whishlist/widgets/whishlist.dart';
 import 'package:flutter/material.dart';
 
 class WhislistScreen extends StatelessWidget {
@@ -33,7 +33,7 @@ class WhislistScreen extends StatelessWidget {
       ),
       body: const Padding(
         padding: EdgeInsets.all(8.0),
-        child: ExploreProducts(),
+        child: WhishlistWidget(),
       ),
     );
   }

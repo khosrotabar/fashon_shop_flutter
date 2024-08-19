@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:fashon_shop/common/services/storage.dart';
 import 'package:fashon_shop/common/utils/environment.dart';
 import 'package:fashon_shop/common/utils/kstrings.dart';
+import 'package:fashon_shop/common/utils/logger.dart';
 import 'package:fashon_shop/common/widgets/error_modal.dart';
 import 'package:fashon_shop/src/auth/models/auth_token_model.dart';
 import 'package:fashon_shop/src/auth/models/profile_model.dart';
@@ -49,8 +50,14 @@ class AuthNotifier with ChangeNotifier {
         controller.setIndex = 0;
         context.go('/home');
       }
+
+      if (response.statusCode == 400) {
+        setLoading();
+        showErrorPopup(context, 'Username or Password Incorrect!', null, null);
+      }
     } catch (e) {
       setLoading();
+      TLoggerHelper.debug(e.toString());
       showErrorPopup(context, e.toString(), null, null);
     }
   }

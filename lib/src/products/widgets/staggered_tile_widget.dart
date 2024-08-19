@@ -1,9 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fashon_shop/common/utils/kcolors.dart';
+import 'package:fashon_shop/common/utils/logger.dart';
 import 'package:fashon_shop/common/widgets/app_style.dart';
 import 'package:fashon_shop/common/widgets/reusable_text.dart';
 import 'package:fashon_shop/src/products/controllers/product_notifier.dart';
 import 'package:fashon_shop/src/products/models/products_model.dart';
+import 'package:fashon_shop/src/whishlist/controllers/whishlist_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
@@ -49,16 +51,20 @@ class StaggeredTileWidget extends StatelessWidget {
                     Positioned(
                       right: 10.h,
                       top: 10.h,
-                      child: GestureDetector(
-                        onTap: onTap,
-                        child: const CircleAvatar(
-                          backgroundColor: Kolors.kSecondaryLight,
-                          child: Icon(
-                            AntDesign.heart,
-                            color: Kolors.kRed,
-                            size: 18,
-                          ),
-                        ),
+                      child: Consumer<WhishlistNotifier>(
+                        builder: (context, whishlistNotifier, child) {
+                          return GestureDetector(
+                            onTap: onTap,
+                            child: CircleAvatar(
+                              backgroundColor: Kolors.kSecondaryLight,
+                              child: Icon(
+                                AntDesign.heart,
+                                color: whishlistNotifier.whishlist.contains(product.id) ? Kolors.kRed : Kolors.kGray,
+                                size: 18,
+                              ),
+                            ),
+                          );
+                        },
                       ),
                     ),
                   ],
