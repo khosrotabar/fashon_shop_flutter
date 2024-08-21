@@ -3,6 +3,7 @@ import 'package:fashon_shop/common/utils/environment.dart';
 import 'package:fashon_shop/common/utils/kstrings.dart';
 import 'package:fashon_shop/src/auth/controllers/auth_notifier.dart';
 import 'package:fashon_shop/src/auth/controllers/password_notifier.dart';
+import 'package:fashon_shop/src/cart/controllers/cart_notifier.dart';
 import 'package:fashon_shop/src/categories/controllers/category_notifier.dart';
 import 'package:fashon_shop/src/entrypoint/controllers/bottom_tab_notifier.dart';
 import 'package:fashon_shop/src/home/controllers/home_tab_notifier.dart';
@@ -36,6 +37,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => AuthNotifier()),
         ChangeNotifierProvider(create: (_) => SearchNotifier()),
         ChangeNotifierProvider(create: (_) => WhishlistNotifier()),
+        ChangeNotifierProvider(create: (_) => CartNotifier()),
       ],
       child: const MyApp(),
     ),

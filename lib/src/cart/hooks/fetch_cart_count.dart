@@ -1,21 +1,22 @@
 import 'package:fashon_shop/common/services/storage.dart';
 import 'package:fashon_shop/common/utils/environment.dart';
-import 'package:fashon_shop/src/categories/hook/results/products_results.dart';
-import 'package:fashon_shop/src/products/models/products_model.dart';
+import 'package:fashon_shop/src/cart/hooks/results/cart_count_results.dart';
+import 'package:fashon_shop/src/cart/models/cart_count_model.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import "package:http/http.dart" as http;
 
-FetchProducts fetchWhishlist() {
-  final products = useState<List<Products>>([]);
+FetchCartCount fetchCartCount() {
+  final initialData = CartCountModel(cartCount: 0);
+  final count = useState<CartCountModel>(initialData);
   final isLoading = useState(false);
   final error = useState<String?>(null);
+  String? accessToken = Storage().getString('accessToken');
 
   Future<void> fetchData() async {
     isLoading.value = true;
 
     try {
-      Uri url = Uri.parse('${Environment.appBaseUrl}/api/whishlist/me/');
-      String? accessToken = Storage().getString('accessToken');
+      Uri url = Uri.parse('${Environment.appBaseUrl}/api/cart/count/');
 
       final response = await http.get(
         url,
@@ -26,7 +27,7 @@ FetchProducts fetchWhishlist() {
       );
 
       if (response.statusCode == 200) {
-        products.value = productsFromJson(response.body);
+        count.value = cartCountModelFromJson(response.body);
       }
     } catch (e) {
       error.value = e.toString();
@@ -36,7 +37,9 @@ FetchProducts fetchWhishlist() {
   }
 
   useEffect(() {
-    fetchData();
+    if (accessToken != null) {
+      fetchData();
+    }
     return;
   }, const []);
 
@@ -46,5 +49,5 @@ FetchProducts fetchWhishlist() {
     fetchData();
   }
 
-  return FetchProducts(products: products.value, isLoading: isLoading.value, error: error.value, refetch: refetch);
+  return FetchCartCount(count: count.value, isLoading: isLoading.value, error: error.value, refetch: refetch);
 }

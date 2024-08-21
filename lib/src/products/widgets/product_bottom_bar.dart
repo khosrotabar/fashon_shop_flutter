@@ -5,7 +5,9 @@ import 'package:fashon_shop/common/widgets/app_style.dart';
 import 'package:fashon_shop/common/widgets/error_modal.dart';
 import 'package:fashon_shop/common/widgets/login_bottom_sheet.dart';
 import 'package:fashon_shop/common/widgets/reusable_text.dart';
+import 'package:fashon_shop/src/cart/models/create_cart_model.dart';
 import 'package:fashon_shop/src/products/controllers/color_size_notifier.dart';
+import 'package:fashon_shop/src/products/controllers/product_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
@@ -26,6 +28,7 @@ class ProductBottomBar extends StatelessWidget {
   Widget build(BuildContext context) {
     String? accessToken = Storage().getString('accessToken');
     final controller = Provider.of<ColorSizesNotifier>(context);
+    final productNotifier = Provider.of<ProductNotifier>(context);
 
     return Container(
       height: 68.h,
@@ -64,7 +67,11 @@ class ProductBottomBar extends StatelessWidget {
                   if (controller.color == '' || controller.size == '') {
                     showErrorPopup(context, AppText.kCartErrorText, 'Error Adding to Cart', true);
                   } else {
-                    /// TODO: Add to Cart
+                    CreateCartModel data =
+                        CreateCartModel(product: productNotifier.product!.id, quantity: 1, color: controller.color, size: int.parse(controller.size));
+                    String cartData = createCartModelToJson(data);
+
+                    print(cartData);
                   }
                 }
               },
@@ -76,7 +83,7 @@ class ProductBottomBar extends StatelessWidget {
                   const Icon(FontAwesome.shopping_bag, color: Kolors.kWhite, size: 16),
                   SizedBox(width: 8.w),
                   ReusableText(
-                    text: 'Checkout',
+                    text: 'Add to Cart',
                     style: appStyle(
                       14,
                       Kolors.kWhite,
